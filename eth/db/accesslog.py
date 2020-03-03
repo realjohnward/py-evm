@@ -6,12 +6,15 @@ from typing import (
 )
 
 from eth.abc import (
+    AtomicWriteBatchAPI,
     AtomicDatabaseAPI,
     DatabaseAPI,
 )
+from eth.db.backends.base import (
+    BaseDB,
+)
 from eth.db.atomic import (
     BaseAtomicDB,
-    BaseDB,
 )
 
 
@@ -98,6 +101,6 @@ class KeyAccessLoggerAtomicDB(BaseAtomicDB):
         return key in self.wrapped_db
 
     @contextmanager
-    def atomic_batch(self) -> Iterator[DatabaseAPI]:
+    def atomic_batch(self) -> Iterator[AtomicWriteBatchAPI]:
         with self.wrapped_db.atomic_batch() as readable_batch:
             yield readable_batch
