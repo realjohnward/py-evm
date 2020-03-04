@@ -44,10 +44,10 @@ class KeyAccessLoggerDB(BaseDB):
             result = self.wrapped_db.__getitem__(key)
         except KeyError:
             if self._log_missing_keys:
-                self.keys_read.add(key)
+                self._keys_read.add(key)
             raise
         else:
-            self.keys_read.add(key)
+            self._keys_read.add(key)
             return result
 
     def __setitem__(self, key: bytes, value: bytes) -> None:
@@ -85,10 +85,10 @@ class KeyAccessLoggerAtomicDB(BaseAtomicDB):
             result = self.wrapped_db.__getitem__(key)
         except KeyError:
             if self._log_missing_keys:
-                self.keys_read.add(key)
+                self._keys_read.add(key)
             raise
         else:
-            self.keys_read.add(key)
+            self._keys_read.add(key)
             return result
 
     def __setitem__(self, key: bytes, value: bytes) -> None:
